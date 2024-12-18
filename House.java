@@ -81,17 +81,15 @@ public class House extends Building {
    * 
    * @param name the person to be removed
    * @return the person's name
+   * @throws Exception if the resident is not found in the list
    */
-  public String moveOut(String name) {
-    try {
-      if (this.isResident(name)) {
-        residents.remove(name);
-        System.out.println(name + " successfully moved out from " + this.name);
-      } else {
-        System.out.println(name + " is not living in " + this.name);
-      }
-    } catch (Exception e) {
-      System.out.println("Something's wrong.");
+  public String moveOut(String name) throws Exception {
+    if (this.isResident(name)) {
+      residents.remove(name);
+      System.out.println(name + " successfully moved out from " + this.name);
+    } else {
+      throw new Exception(name + " is not living in " + this.name);
+
     }
     return name;
   }

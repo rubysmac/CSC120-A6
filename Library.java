@@ -49,17 +49,14 @@ public class Library extends Building {
    * with the title as a key and true as a value
    * 
    * @param title the title of the book
+   * @throws Exception if the book is already in the collection
    */
-  public void addTitle(String title) {
-    try {
-      if (this.containsTitle(title)) {
-        System.out.println(title + " is already in this collection");
-      } else {
-        this.collection.put(title, true);
-        System.out.println(title + " is successfully added!");
-      }
-    } catch (Exception e) {
-      System.out.println("Something's wrong.");
+  public void addTitle(String title) throws Exception {
+    if (!this.containsTitle(title)) {
+      this.collection.put(title, true);
+      System.out.println(title + " is successfully added!");
+    } else {
+      throw new Exception(title + " is already in this collection");
     }
   }
 
@@ -69,17 +66,14 @@ public class Library extends Building {
    * 
    * @param title the title of the book
    * @return the title of the book
+   * @throws Exception if the book is not in the collection
    */
-  public String removeTitle(String title) {
-    try {
-      if (this.containsTitle(title)) {
-        this.collection.remove(title);
-        System.out.println(title + " is successfully removed!");
-      } else {
-        System.out.println(title + " is not in this collection");
-      }
-    } catch (Exception e) {
-      System.out.println("Something's wrong.");
+  public String removeTitle(String title) throws Exception {
+    if (this.containsTitle(title)) {
+      this.collection.remove(title);
+      System.out.println(title + " is successfully removed!");
+    } else {
+      throw new Exception(title + " is not in this collection");
     }
     return title;
   }
@@ -88,17 +82,14 @@ public class Library extends Building {
    * Changes the book's availability into false
    * 
    * @param title the title of the book
+   * @throws Exception if the book is not available
    */
-  public void checkOut(String title) {
-    try {
-      if (this.isAvailable(title)) {
-        this.collection.replace(title, false);
-        System.out.println(title + " is checked out!");
-      } else {
-        System.out.println(title + " is not available now");
-      }
-    } catch (Exception e) {
-      System.out.println("Something's wrong.");
+  public void checkOut(String title) throws Exception {
+    if (this.isAvailable(title)) {
+      this.collection.replace(title, false);
+      System.out.println(title + " is checked out!");
+    } else {
+      throw new Exception(title + " is not available now");
     }
   }
 
@@ -106,17 +97,15 @@ public class Library extends Building {
    * Changes the book's availability into true
    * 
    * @param title the title of the book
+   * @throws Exception if the book is already returned
+   * 
    */
-  public void returnBook(String title) {
-    try {
-      if (this.isAvailable(title)) {
-        System.out.println(title + " seems to be already returned");
-      } else {
-        this.collection.replace(title, true);
-        System.out.println(title + " is returned!");
-      }
-    } catch (Exception e) {
-      System.out.println("Something's wrong.");
+  public void returnBook(String title) throws Exception {
+    if (!this.isAvailable(title)) {
+      this.collection.replace(title, true);
+      System.out.println(title + " is returned!");
+    } else {
+      throw new Exception(title + " seems to be already returned");
     }
   }
 
@@ -138,7 +127,10 @@ public class Library extends Building {
 
   public static void main(String[] args) {
     Library myLibrary = new Library("Neilson Library", "neilson", 5);
-    myLibrary.addTitle("The Lorax by Dr. Seuss");
+    try {
+      myLibrary.addTitle("The Lorax by Dr. Seuss");
+    } catch (Exception e) {
+    }
     myLibrary.printCollection();
   }
 

@@ -52,38 +52,34 @@ public class Cafe extends Building {
      * @param nCreams       the number of creams required
      */
     public void sellCoffee(int size, int nSugarPackets, int nCreams) {
-        try {
-            if (this.nCups > 0) {
-                if (this.nCoffeeOunces - size >= 0) {
-                    if (this.nSugarPackets - nSugarPackets >= 0) {
-                        if (this.nCreams - nCreams >= 0) {
-                            this.nCoffeeOunces -= size;
-                            this.nSugarPackets -= nSugarPackets;
-                            this.nCreams -= nCreams;
-                            this.nCups -= 1;
-                            System.out.println("This coffee is successfully sold!");
-                        } else {
-                            System.out.println("There is not enough creams left");
-                            this.restock(0, 0, 20, 0);
-                            System.out.println("Now creams are restocked!");
-                        }
+        if (this.nCups > 0) {
+            if (this.nCoffeeOunces - size >= 0) {
+                if (this.nSugarPackets - nSugarPackets >= 0) {
+                    if (this.nCreams - nCreams >= 0) {
+                        this.nCoffeeOunces -= size;
+                        this.nSugarPackets -= nSugarPackets;
+                        this.nCreams -= nCreams;
+                        this.nCups -= 1;
+                        System.out.println("This coffee is successfully sold!");
                     } else {
-                        System.out.println("There is not enough sugars left");
-                        this.restock(0, 50, 0, 0);
-                        System.out.println("Now sugars are restocked!");
+                        System.out.println("There is not enough creams left");
+                        this.restock(0, 0, 20, 0);
+                        System.out.println("Now creams are restocked!");
                     }
                 } else {
-                    System.out.println("There is not enough ounces of coffee left");
-                    this.restock(20, 0, 20, 0);
-                    System.out.println("Now coffee ounces are restocked!");
+                    System.out.println("There is not enough sugars left");
+                    this.restock(0, 50, 0, 0);
+                    System.out.println("Now sugars are restocked!");
                 }
             } else {
-                System.out.println("There are no cups left");
-                this.restock(0, 0, 0, 20);
-                System.out.println("Now creams are restocked!");
+                System.out.println("There is not enough ounces of coffee left");
+                this.restock(20, 0, 0, 0);
+                System.out.println("Now coffee ounces are restocked!");
             }
-        } catch (Exception e) {
-            System.out.println("Something's wrong.");
+        } else {
+            System.out.println("There are no cups left");
+            this.restock(0, 0, 0, 20);
+            System.out.println("Now creams are restocked!");
         }
 
     }
